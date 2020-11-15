@@ -6,7 +6,7 @@
     "scripts": {
         "pack": "cross-env NODE_ENV=production TARGET_ENV=printer BUILD_ENV=debug webpack --mode=production",
         "build": "preact build",
-        "build-no-pr": "preact build  --no-prerender --sw=false --esm=false --json",
+        "build-esp": "preact build  --no-prerender --no-sw --no-esm --json",
         "serve": "sirv build --port 8080 --cors --single",
         "dev": "preact watch --port 8088",
         "lint": "eslint src",
