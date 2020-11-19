@@ -3,7 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import Loader from '../../components/Loader'
 import { Filter } from './Filter'
 
-import panelList from './Panels'
+import panelList from './PanelList-APP_TARGET'
 
 const Dashboard = () => {
 	const [activePanels, setActivePanels] = useState({ ...panelList })
