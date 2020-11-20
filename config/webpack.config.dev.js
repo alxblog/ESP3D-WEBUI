@@ -5,6 +5,7 @@ module.exports = merge(commonConfig, {
     optimization: {
         minimize: false
     },
+    // add entry with preact devtool
     devtool: "eval-cheap-source-map",
     mode: "development",
     devServer: {
