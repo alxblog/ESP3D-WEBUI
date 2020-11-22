@@ -1,26 +1,28 @@
 import { h } from 'preact';
+import { Panel, Button } from '../../../components/Spectre'
+import { Settings, Send } from 'preact-feather';
 
 const TerminalPanel = ({ title }) => (
-    <div class="panel">
-        <div class="panel-header">
-            <div class="panel-title">{title}</div>
-        </div>
-        <div class="panel-nav">
-            <p>
-                navigation components: tabs, breadcrumbs or pagination
-            </p>
-        </div>
-        <div class="panel-body">
-            <p>
-                contents
-            </p>
-        </div>
-        <div class="panel-footer">
-            <p>
-                buttons or inputs
-            </p>
-        </div>
-    </div>
+    <Panel>
+        <Panel.Header>
+            <Panel.Title class="h5">{title}
+                <Button class="float-right" link><Settings /></Button>
+            </Panel.Title>
+        </Panel.Header>
+        <Panel.Body>
+            <div id="terminal" >
+                <pre>du code par ci</pre>
+                <pre>du code par là</pre>
+            </div>
+            <form >
+                <div class="input-group">
+                    <input type="text" class="form-input" />
+                    <Button class="input-group-btn" primary type="submit"><Send /></Button>
+                </div>
+            </form>
+        </Panel.Body>
+        <Panel.Footer />
+    </Panel>
 )
 
 export default TerminalPanel

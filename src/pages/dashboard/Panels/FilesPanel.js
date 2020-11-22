@@ -1,26 +1,21 @@
 import { h } from 'preact';
+import { Panel, Button } from '../../../components/Spectre'
+import File from '../../../components/File'
+import { Settings } from 'preact-feather';
+
 
 const FilesPanel = ({ title }) => (
-    <div class="panel">
-        <div class="panel-header">
-            <div class="panel-title">{title}</div>
-        </div>
-        <div class="panel-nav">
-            <p>
-                navigation components: tabs, breadcrumbs or pagination
-            </p>
-        </div>
-        <div class="panel-body">
-            <p>
-                contents
-            </p>
-        </div>
-        <div class="panel-footer">
-            <p>
-                buttons or inputs
-            </p>
-        </div>
-    </div>
+    <Panel>
+        <Panel.Header>
+            <Panel.Title class="h5">{title}
+                <Button class="float-right" link><Settings /></Button>
+            </Panel.Title>
+        </Panel.Header>
+        <Panel.Body>
+            <File />
+        </Panel.Body>
+        <Panel.Footer>Footer</Panel.Footer>
+    </Panel>
 )
 
 export default FilesPanel
