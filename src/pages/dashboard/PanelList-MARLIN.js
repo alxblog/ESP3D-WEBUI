@@ -1,11 +1,13 @@
-import TemperaturesPanel from './Panels/TemperaturesPanel'
-import PositionsPanel from './Panels/PositionsPanel'
-import SpeedPanel from './Panels/SpeedPanel'
-import FlowratePanel from './Panels/FlowratePanel'
 import FanPanel from './Panels/FanPanel'
 import ExtrusionPanel from './Panels/ExtrusionPanel'
-import TerminalPanel from './Panels/TerminalPanel'
+import FlowratePanel from './Panels/FlowratePanel'
 import FilesPanel from './Panels/FilesPanel'
+import MacroPanel from './Panels/MacroPanel'
+import PositionsPanel from './Panels/PositionsPanel'
+import SpeedPanel from './Panels/SpeedPanel'
+import TemperaturesPanel from './Panels/TemperaturesPanel'
+import TerminalPanel from './Panels/TerminalPanel'
+
 
 const panelList = {
     temperatures: {
@@ -31,6 +33,9 @@ const panelList = {
     },
     files: {
         comp: FilesPanel,
+    },
+    macro: {
+        comp: MacroPanel,
     },
 }
 
