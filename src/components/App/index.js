@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
-import { Router } from '../Router'
+import { Router, RouterProvider } from '../Router'
 import { UiContextProvider } from '../UiContext'
 import HttpContextProvider from '../../components/HttpContext'
 import { TranslateContextProvider, useTranslateContext } from '../../components/Translate'
@@ -35,21 +35,23 @@ const routes = {
     },
 }
 
-const App = () => { 
+const App = () => {
     return (
         <div id="app">
-            <HttpContextProvider>
-                <TranslateContextProvider>
-                    <UiContextProvider>
-                        <Toast />
-                        <Modal />
-                        <Navbar />
-                        <div id="main-container">
-                            <Router routes={routes} />
-                        </div>
-                    </UiContextProvider>
-                </TranslateContextProvider>
-            </HttpContextProvider>
+            <RouterProvider>
+                <HttpContextProvider>
+                    <TranslateContextProvider>
+                        <UiContextProvider>
+                            <Toast />
+                            <Modal />
+                            <Navbar />
+                            <div id="main-container">
+                                <Router routes={routes} />
+                            </div>
+                        </UiContextProvider>
+                    </TranslateContextProvider>
+                </HttpContextProvider>
+            </RouterProvider>
         </div>
     )
 }
