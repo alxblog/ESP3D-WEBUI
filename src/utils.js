@@ -1,3 +1,7 @@
+import { h } from 'preact';
+
+export const capitalize = (s) => (typeof s === 'string') ? s.charAt(0).toUpperCase() + s.slice(1) : ''
+
 export const getColClasses = ({ col, ...responsive }) => {
     const responsiveClasses =
         Object
@@ -33,3 +37,25 @@ export const mergeFlatPrefToNestedSchema = (settings, schema) => {
         return { ...acc, [key]: { ...schema[key], value: settings[key] } }
     }, { ...schema })
 }
+
+export const createComponent =
+    (
+        is,
+        className,
+        classModifier = {},
+    ) =>
+        ({
+            is: Tag = is,
+            class: c = '',
+            id = '',
+            ...props
+        }) => {
+            const splittedArgs = Object.keys(props)
+                .reduce((acc, curr) => {
+                    if (Object.keys(classModifier).includes(curr)) return { classes: [...acc.classes, classModifier[curr]], ...acc.props }
+                    return { classes: [...acc.classes], props: { ...acc.props, [curr]: props[curr] } }
+                }, { classes: [], props: {} })
+            const classNames = `${className} ${splittedArgs.classes.join(' ')} ${c}`.trim()
+
+            return <Tag class={classNames} id={id} {...splittedArgs.props} />
+        }
