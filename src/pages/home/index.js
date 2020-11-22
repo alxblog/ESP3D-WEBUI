@@ -1,37 +1,22 @@
 import { h } from 'preact';
-import { useHttpContext } from '../../components/HttpContext'
-import {
-	useState,
-	useEffect
-} from "preact/hooks"
+import { useQueuing } from '../../hooks/useQueuing'
 
 const Home = () => {
 	const {
-		addInQueue,
-		removeRequests
-	} = useHttpContext()
-
-	const [foo, setFoo] = useState()
-	const [localRequests, setLocalRequests] = useState([])
-
-	useEffect(() => {
-		return () => removeRequests(localRequests)
-	}, [])
+		createNewRequest,
+		abortRequest,
+		data
+	} = useQueuing()
 
 	const addNewRequest = () => {
-		const newId = Math.random().toString(36).substr(2, 9)
-		setLocalRequests([...localRequests, newId])
-		addInQueue({
-			id: newId,
-			url: 'my url',
-			params: {
-				method: 'GET'
-			},
-			onSuccess: result => {
-				setFoo(result)
-				// Faire des trucs ici
+		createNewRequest(
+			`http://slowwly.robertomurray.co.uk/delay/${3000}/url/https://jsonplaceholder.typicode.com/todos/1`,
+			{ method: 'GET' },
+			{
+				onSuccess: result => console.log(result),
+				onFail: error => console.log(error)
 			}
-		})
+		)
 	}
 
 	return (
@@ -39,8 +24,10 @@ const Home = () => {
 			<h2>Home</h2>
 			<p>This is the Home component.</p>
 			<button onClick={addNewRequest}>Add request</button>
-			<button onClick={() => {}}>remove request</button>
-			<p>{foo}</p>
+			<button onClick={abortRequest}>Abort XHR</button>
+			<pre>
+				<code>{data}</code>
+			</pre>
 		</div>
 	)
 }

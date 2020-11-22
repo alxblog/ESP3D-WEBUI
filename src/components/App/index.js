@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { Router, RouterProvider } from '../Router'
 import { UiContextProvider } from '../UiContext'
-import HttpContextProvider from '../../components/HttpContext'
+import QueueingContextProvider from '../../contexts/QueueingContext'
 import { TranslateContextProvider, useTranslateContext } from '../../components/Translate'
 import Navbar from '../Navbar';
 import { Toast } from '../Toast';
@@ -39,7 +39,7 @@ const App = () => {
     return (
         <div id="app">
             <RouterProvider>
-                <HttpContextProvider>
+                <QueueingContextProvider>
                     <TranslateContextProvider>
                         <UiContextProvider>
                             <Toast />
@@ -50,7 +50,7 @@ const App = () => {
                             </div>
                         </UiContextProvider>
                     </TranslateContextProvider>
-                </HttpContextProvider>
+                </QueueingContextProvider>
             </RouterProvider>
         </div>
     )
