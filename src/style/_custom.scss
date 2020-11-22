@@ -10,7 +10,29 @@
 #dashboard {
     .panel {
         margin-bottom: 1em;
+
+        .actions {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding: 0 $layout-spacing-lg;
+        }
+
     }
+}
+
+.column {
+    .panel {
+        height: 100%;
+        box-shadow: 0px 0px 14px -5px rgba(0, 0, 0, 0.05);
+    }
+}
+
+.btn {
+    &.settings-dropdown {
+        color: $gray-color-dark;
+        float: right;
+    }
+
 }
 
 .toaster-container {
@@ -29,6 +51,54 @@
 
         .panel-body {
             padding: 0.4rem 0.8rem;
+        }
+    }
+}
+
+#terminal {
+    min-height: 20em;
+    max-height: 20em;
+    margin-bottom: $unit-3;
+    // border: $border-width solid $dark-color;
+    border-radius: $border-radius;
+    color: $gray-color;
+    background-color: $dark-color;
+    display: block;
+    padding: $control-padding-y $control-padding-x;
+    font-family: $mono-font-family;
+    font-size: $font-size-sm;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+
+    // font-weight: 300;
+    code {
+        margin: 0em;
+        display: block;
+
+        &.stdout {
+            &:before {
+                content: "\25BE";
+                margin: 0px $control-padding-x 0px 0px;
+            }
+        }
+
+        &.stdin {
+            &:before {
+                color: #2d98da;
+                content: "\25B4";
+                margin: 0px $control-padding-x 0px 0px;
+            }
+        }
+
+        &.info {
+            background-color: #f7b731;
+            color: #ffffff;
+
+            &:before {
+                content: "\25B8";
+                margin: 0px $control-padding-x 0px 0px;
+            }
         }
     }
 }
