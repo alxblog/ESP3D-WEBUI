@@ -16,14 +16,6 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
-            {
-                test: /\.scss/,
-                loader: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
-            },
         ]
     },
     plugins: [

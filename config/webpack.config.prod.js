@@ -12,6 +12,23 @@ module.exports = merge(commonConfig, {
     mode: "production",
     module: {},
     devtool: "none",
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
+            {
+                test: /\.scss/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' },
+                    { loader: 'sass-loader' },
+                ]
+            },
+        ]
+    },
     plugins: [
         // new HtmlWebpackPlugin({
         //     inject: true,
