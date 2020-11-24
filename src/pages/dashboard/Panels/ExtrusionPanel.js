@@ -1,11 +1,13 @@
 import { h } from 'preact';
 import { Button, Panel } from '../../../components/Spectre'
+import PanelDropdownMenu from '../../../components/PanelDropdownMenu'
+
 import { Settings } from 'preact-feather';
 const ExtrusionPanel = ({ title }) => (
     <Panel>
         <Panel.Header>
             <Panel.Title class="h5">{title}
-                <Button class="settings-dropdown" link><Settings /></Button>
+                <PanelDropdownMenu />
             </Panel.Title>
         </Panel.Header>
         <Panel.Nav>

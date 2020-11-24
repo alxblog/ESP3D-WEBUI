@@ -1,12 +1,12 @@
 import { h } from 'preact';
-import { Button, Panel, Table } from '../../../components/Spectre'
-import { Settings } from 'preact-feather';
+import { Panel, Table } from '../../../components/Spectre'
+import PanelDropdownMenu from '../../../components/PanelDropdownMenu'
 
 const PositionsPanel = ({ title }) => (
     <Panel>
         <Panel.Header>
             <Panel.Title class="h5">{title}
-                <Button class="settings-dropdown" link><Settings /></Button>
+                <PanelDropdownMenu />
             </Panel.Title>
         </Panel.Header>
         <Panel.Body>
