@@ -1,5 +1,6 @@
 import { h, createContext } from 'preact'
-import { useState } from "preact/hooks"
+import { useState, useRef } from "preact/hooks"
+import { generateUID, removeEntriesByIDs } from "../utils"
 
 const UiContext = createContext(null)
 UiContext.displayName = 'uiContext'
@@ -8,12 +9,16 @@ const UiContextProvider = ({ children }) => {
     const [data, setData] = useState()
     const [modals, setModal] = useState([])
     const [toasts, setToasts] = useState([])
+    const toastsRef = useRef(toasts)
+    toastsRef.current = toasts
 
-    const addToast = (newToast) => setToasts([...toasts, newToast])
-    const removeToast = (toastIndex) => {
-        const newToastList = toasts.filter((toast, index) => index !== toastIndex)
-        setToasts(newToastList)
+    const addToast = (newToast) => { setToasts([...toasts, { ...newToast, id: generateUID() }]) }
+
+    const removeToast = (uids) => {
+        const removedIds = removeEntriesByIDs(toastsRef.current, uids)
+        setToasts([...removedIds])
     }
+
     const addModal = (newModal) => setModal([...modals, newModal])
     const removeModal = (modalIndex) => {
         const newModalList = modals.filter((modal, index) => index !== modalIndex)
@@ -33,4 +38,5 @@ const UiContextProvider = ({ children }) => {
     )
 }
 
-export { UiContext, UiContextProvider }
+export { UiContext }
+export default UiContextProvider
