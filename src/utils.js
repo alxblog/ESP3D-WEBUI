@@ -23,6 +23,10 @@ export const flattenNestedObjSchema = (arr) => {
 }
 */
 
+export const generateUID = () => Math.random().toString(36).substr(2, 9)
+
+export const removeEntriesByIDs = (src, uid) => (src.filter(({ id }) => !uid.includes(id)))
+
 export const mergeFlatPrefToNestedSchema = (settings, schema) => {
     // console.log('mergeFlatPrefToNestedSchema', JSON.stringify(settings))
     // console.log('mergeFlatPrefToNestedSchema schema', JSON.stringify(schema))
