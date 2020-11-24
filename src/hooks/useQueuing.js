@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'preact/hooks'
 import { QueueingContext } from '../contexts/QueueingContext'
+import { generateUID } from '../utils'
 
 export const useQueuing = () => {
     const {
@@ -18,7 +19,7 @@ export const useQueuing = () => {
 
     const createNewRequest = (url, params, callbacks = {}) => {
         const { onSuccess: onSuccessCb, onFail: onFailCb } = callbacks
-        const id = Math.random().toString(36).substr(2, 9)
+        const id = generateUID()
         _localRequests.current = [..._localRequests.current, id]
         addInQueue({
             id,
