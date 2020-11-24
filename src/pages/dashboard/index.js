@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useEffect, useState } from "preact/hooks";
-import Loader from '../../components/Loader'
+import { Loading } from '../../components/Spectre'
 import { Router, Breadcrumbs } from '../../components/Router';
 import { Filter } from './Filter'
 import { capitalize } from '../../utils'
@@ -32,7 +32,7 @@ const Dashboard = () => {
 	return (
 		<div id="dashboard" className="container">
 			<h2>Dashboard</h2>
-			{isLoading && <Loader />}
+			{isLoading && <Loading large />}
 			{!isLoading && <div className="filter-wrapper mb-2">
 				<Filter
 					items={panelList}
