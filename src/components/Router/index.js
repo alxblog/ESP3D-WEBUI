@@ -1,6 +1,6 @@
 import { h, Fragment, createContext } from 'preact';
 import { useState, useEffect, useCallback, useContext } from 'preact/hooks'
-import Loader from '../Loader'
+import { Loading } from '../../components/Spectre'
 
 const RouterContext = createContext()
 RouterContext.displayName = 'RouterContext'
@@ -66,7 +66,7 @@ const Router = ({ children, routes }) => {
     }, [handleHashChange, routerContext.activeRoute])
 
     return (
-        isLoading ? (<Loader />) : (
+        isLoading ? (<Loading large />) : (
             <Fragment>
                 {ActiveComponent}
                 {children}
