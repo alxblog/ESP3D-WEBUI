@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useEffect, useState } from "preact/hooks";
-import Loader from '../../components/Loader'
+import { Loading } from '../../components/Spectre'
 
 const About = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -20,7 +20,7 @@ const About = () => {
         <div id="about" className="container">
             <h2>About</h2>
             <p>This is the About .</p>
-            {isLoading && <Loader />}
+            {isLoading && <Loading />}
             {!isLoading && props &&
                 <ul>
                     {props.map((prop, key) =>
