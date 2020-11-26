@@ -1,11 +1,11 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { Router, RouterProvider } from '../Router'
-import { UiContextProvider } from '../UiContext'
+import UiContextProvider from '../../contexts/UiContext'
 import QueueingContextProvider from '../../contexts/QueueingContext'
 import { TranslateContextProvider, useTranslateContext } from '../../components/Translate'
 import Navbar from '../Navbar';
-import { Toast } from '../Toast';
+import { ToastsContainer } from '../Toast';
 import { Modal } from '../Modal';
 import Home from '../../pages/home';
 import About from '../../pages/about';
@@ -42,7 +42,7 @@ const App = () => {
                 <QueueingContextProvider>
                     <TranslateContextProvider>
                         <UiContextProvider>
-                            <Toast />
+                            <ToastsContainer />
                             <Modal />
                             <Navbar />
                             <div id="main-container">
