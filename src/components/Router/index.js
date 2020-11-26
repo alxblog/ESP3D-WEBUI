@@ -1,6 +1,6 @@
 import { h, Fragment, createContext } from 'preact';
 import { useState, useEffect, useCallback, useContext } from 'preact/hooks'
-import { Loading } from '../../components/Spectre'
+import { Loading, Breadcrumb } from '../../components/Spectre'
 
 const RouterContext = createContext()
 RouterContext.displayName = 'RouterContext'
@@ -88,12 +88,12 @@ const Breadcrumbs = () => {
     }, [activeRoute])
 
     return (
-        breadcrumbs && <ul class="breadcrumb">
+        breadcrumbs && <Breadcrumb>
             {breadcrumbs.map(crumb =>
-                <li class="breadcrumb-item">
+                <Breadcrumb.Item>
                     <a href={`#${crumb.path}`}>{crumb.name}</a>
-                </li>)}
-        </ul>)
+                </Breadcrumb.Item>)}
+        </Breadcrumb>)
 }
 
 /**
