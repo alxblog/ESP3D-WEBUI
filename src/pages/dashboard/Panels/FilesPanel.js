@@ -77,7 +77,7 @@ const FilesPanel = ({ title }) => {
     const getFileList = (path) => {
         setIsLoading(true)
         createNewRequest(
-            `http://localhost:8080/files?path=${encodeURIComponent(path)}&action=list&PAGEID=3`,
+            `http://localhost:8080/files?path=${encodeURIComponent(path)}&action=list`,
             { method: 'GET' },
             {
                 onSuccess: result => { displayFileList(result) },
