@@ -1,4 +1,5 @@
 import Button from './Button'
+import Breadcrumb from './Breadcrumb'
 import Divider from './Divider'
 import Loading from './Loading'
 import Menu from './Menu'
@@ -12,6 +13,7 @@ import Toast from './Toast'
 // export default Spectre
 export {
     Button,
+    Breadcrumb,
     Panel,
     Progress,
     Table,
