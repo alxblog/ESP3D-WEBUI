@@ -7,9 +7,33 @@
     background-color: $bg-color-dark;
 }
 
+.file-list {
+    .tile {
+        &:hover {
+            background: $secondary-color;
+
+            &.folder {
+                cursor: pointer;
+            }
+        }
+
+        .tile-content {
+            .tile-subtitle {
+                line-height: $line-height*0.8;
+            }
+        }
+    }
+}
+
 #dashboard {
     .panel {
         margin-bottom: 1em;
+        // min-height: 5rem;
+        // max-height: 60vh;
+
+        @media (max-width: $size-lg) {
+            // max-height: 100vh;
+        }
 
         .actions {
             flex: 1 1 auto;
@@ -27,16 +51,70 @@
     }
 }
 
-.btn {
-    &.settings-dropdown {
-        color: $gray-color-dark;
-        float: right;
+.upload-wrapper {
+    .drag-drop-zone {
+        border: 2px dashed $gray-color;
+        border-radius: $border-radius;
+        height: 5rem;
+        background-color: $gray-color-light;
+        color: $primary-color;
+        text-align: center;
+        line-height: 5rem;
+
+        &.active {
+            color: $primary-color-dark;
+            border: 2px dashed $primary-color;
+            background-color: $secondary-color;
+        }
     }
 
+    .file-input {
+        visibility: hidden;
+    }
+
+    .content {
+        padding: 10px;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .upload-list {}
 }
 
-.toaster-container {
-    position: absolute;
+.panel-dropdown {
+    color: $gray-color-dark;
+    float: right;
+    font-weight: normal;
+    font-size: $font-size;
+}
+
+.menu-item {
+    margin-top: 0;
+    padding: 0 $unit-2;
+    position: relative;
+    text-decoration: none;
+
+    &>.btn {
+        border-radius: $border-radius;
+        color: inherit;
+        display: block;
+        padding: $unit-1 $unit-2;
+        text-decoration: none;
+
+        &:focus,
+        &:hover {
+            background: $secondary-color;
+            color: $primary-color;
+        }
+
+    }
+}
+
+.toasts-container {
+    position: fixed;
+    z-index: 1000;
     right: 0.5rem;
     top: 0.5rem;
 
