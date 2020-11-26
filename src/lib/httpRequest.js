@@ -25,7 +25,8 @@ const xhrWrapper = (url, params = {}, setUploadProgress = () => { }) => {
 
 
 
-    xhr.open(sanitizedMethod, url, true)
+    xhr.open(sanitizedMethod, url + ((/\?/).test(url) ? "&" : "?") + "t=" + (new Date()).getTime(), true) //Bypassing the cache
+
     /** handle URL params ? */
 
     /** header part */
