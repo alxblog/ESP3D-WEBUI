@@ -62,6 +62,14 @@ const routes = {
 		component: panelList.temperatures.comp,
 		path: '/dashboard/temperatures',
 	},
+	extrusion: {
+		component: panelList.extrusion.comp,
+		path: '/dashboard/extrusion',
+	},
+	files: {
+		component: panelList.files.comp,
+		path: '/dashboard/files',
+	},
 }
 
 const DashboardWrapper = () => {
