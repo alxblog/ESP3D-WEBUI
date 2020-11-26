@@ -36,11 +36,11 @@ const QueueingContextProvider = ({ children }) => {
 
     const executeHttpCall = async () => {
         if (!isBusy.current) isBusy.current = true
-        const { url, params, onSuccess, onFail } = requestQueue.current[0]
+        const { url, params, onSuccess, onFail, onProgress } = requestQueue.current[0]
         try {
             console.log(requestQueue.current[0])
             console.log(`requete en cours... ${requestQueue.current[0].id}`)
-            currentRequest.current = xhrWrapper(url, params)
+            currentRequest.current = xhrWrapper(url, params, onProgress)
             const response = await currentRequest.current.response
             // console.log(currentRequest.current)
             onSuccess(response)

@@ -9,11 +9,23 @@
  * @returns {Function} return.abort
  * @returns {XHR} return.xhr
  */
-const xhrWrapper = (url, params = {}) => {
+const xhrWrapper = (url, params = {}, setUploadProgress = () => { }) => {
     const { method = 'GET', headers = {}, body = null } = params
     const sanitizedMethod = method.trim().toUpperCase()
     const xhr = new XMLHttpRequest()
-    xhr.open(sanitizedMethod, url)
+
+    // xhr.addEventListener('loadstart', (e) => { console.log('hellooo'); setProgress(e) });
+    // xhr.upload.addEventListener('loadstart', (e) => { console.log('hellooo UPLOAD'); setUploadProgress(e) });
+    xhr.upload.addEventListener('progress', (e) => {
+        const done = e.position || e.loaded
+        const total = e.totalSize || e.total;
+        const perc = (Math.floor(done / total * 1000) / 10);
+        setUploadProgress(perc);
+    });
+
+
+
+    xhr.open(sanitizedMethod, url, true)
     /** handle URL params ? */
 
     /** header part */
