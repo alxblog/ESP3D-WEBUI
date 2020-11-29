@@ -108,6 +108,7 @@ const UploadForm = ({ currentPath }) => {
                         // setIsLoading(false)
                         // setFileList()
                         // toasts.addToast({ content: error, type: 'error' })
+
                     },
                     onProgress: (e) => { handleProgress(i, e) }
                 }
@@ -146,7 +147,11 @@ const UploadForm = ({ currentPath }) => {
                     {
                         selectedFiles.map((data, i) => {
                             const { name, size } = data.file
-                            return (<li key={i}>{name} - {size} <Progress value={data.progress} max={100} /> </li>)
+                            return (
+                                <li key={`upload-list-${i}`}>
+                                    {name} - { size} <Progress value={data.progress} max={100} />
+                                </li>
+                            )
                         })
                     }
                 </ul>
