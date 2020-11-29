@@ -16,7 +16,7 @@ const Toast = ({ index, type = '', children, timeout = 2000, remove }) => {
     }, []);
 
     return (
-        <SpectreToast {...{ [type]: true }} >
+        <SpectreToast {...{ [type]: true }}>
             <SpectreToast.Close onClick={() => { remove(index) }} />
             {index} - {children}
         </SpectreToast>
@@ -32,7 +32,7 @@ export const ToastsContainer = () => {
         {toastList.map((toast) => {
             const { id, type, content } = toast
             return (
-                <Toast remove={removeToast} index={id} type={type} >
+                <Toast remove={removeToast} index={id} type={type} key={id}>
                     {content}
                 </Toast>
             )
