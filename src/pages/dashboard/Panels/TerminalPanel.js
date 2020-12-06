@@ -1,34 +1,66 @@
 import { h } from 'preact';
+import { useRef, useState, useEffect } from 'preact/hooks';
 import { Panel, Button, Menu } from '../../../components/Spectre'
 import { Field } from '../../../components/Form/Field'
 import { Send } from 'preact-feather';
 import PanelDropdownMenu from '../../../components/PanelDropdownMenu'
+import { useQueuing } from '../../../hooks/useQueuing'
+import { useWS } from '../../../hooks/useWS'
+import useUi from '../../../hooks/useUi'
 
-const TerminalPanel = ({ title }) => (
-    <Panel>
-        <Panel.Header>
-            <Panel.Title class="h5">{title}
-                <PanelDropdownMenu>
-                    <Menu.Item><Field type="boolean" id="" label="Verbose" /></Menu.Item>
-                    <Menu.Item><Field type="boolean" id="" label="Autoscrool" /></Menu.Item>
-                    <Menu.Item><a href="#">Clear</a></Menu.Item>
-                </PanelDropdownMenu>
-            </Panel.Title>
-        </Panel.Header>
-        <Panel.Body>
-            <div id="terminal" >
-                <pre>du code par ci</pre>
-                <pre>du code par là</pre>
-            </div>
-            <form >
-                <div class="input-group">
-                    <input type="text" class="form-input" />
-                    <Button class="input-group-btn" primary type="submit"><Send /></Button>
+const TerminalPanel = ({ title }) => {
+    const { data, setData } = useWS()
+    const commandInputRef = useRef()
+    const { createNewRequest, abortRequest } = useQueuing()
+    const { toasts } = useUi()
+
+    const sendCommand = () => {
+        if (commandInputRef.current) {
+            const input = commandInputRef.current.value
+            setData(input)
+            commandInputRef.current.value = ''
+            createNewRequest(
+                `http://localhost:8080/command?cmd=${encodeURIComponent(input)}&PAGEID=14`,
+                { method: 'GET' },
+                {
+                    // onSuccess: result => { },
+                    onFail: error => {
+                        toasts.addToast({ content: error, type: 'error' })
+                    }
+                }
+            )
+        }
+    }
+
+    // useEffect(() => {
+    //     setStdout([...stdout, ...data])
+    // }, [data])
+
+    return (
+        <Panel>
+            <Panel.Header>
+                <Panel.Title class="h5">{title}
+                    <PanelDropdownMenu>
+                        <Menu.Item><Field type="boolean" id="" label="Verbose" /></Menu.Item>
+                        <Menu.Item><Field type="boolean" id="" label="Autoscrool" /></Menu.Item>
+                        <Menu.Item><a href="#">Clear</a></Menu.Item>
+                    </PanelDropdownMenu>
+                </Panel.Title>
+            </Panel.Header>
+            <Panel.Body>
+                <div id="terminal" >
+                    {data && data.map(line => <pre>{line}</pre>)}
                 </div>
-            </form>
-        </Panel.Body>
-        <Panel.Footer />
-    </Panel>
-)
+                <form >
+                    <div class="input-group">
+                        <input type="text" class="form-input" ref={commandInputRef} />
+                        <Button class="input-group-btn" primary type="submit" onclick={sendCommand}><Send /></Button>
+                    </div>
+                </form>
+            </Panel.Body>
+            <Panel.Footer />
+        </Panel>
+    )
+}
 
 export default TerminalPanel
