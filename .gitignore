@@ -7,3 +7,4 @@ stats.json
 test
 src/stories
 *.stories.js
+.storybook

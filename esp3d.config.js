@@ -1,16 +1,16 @@
 module.exports = {
-    "supportedFirmware": [
+    supportedFirmware: [
         { name: "Marlin" },
         { name: "Grbl" },
     ],
-    "firmwares": {
+    firmwares: {
         default: "Marlin",
         list: [
             { name: "Marlin" },
             { name: "Grbl" },
         ],
     },
-    "languages": {
+    languages: {
         default: "en_US",
         list: ["fr_FR", "pt_PT"]
     }

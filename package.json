@@ -5,7 +5,9 @@
     "license": "MIT",
     "scripts": {
         "build": "esp3d-devtool -P -W ./config/webpack.config.js -E ./esp3d.config.js ",
-        "dev": "esp3d-devtool -W ./config/webpack.config.js -E ./esp3d.config.js "
+        "dev": "esp3d-devtool -W ./config/webpack.config.js -E ./esp3d.config.js ",
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook",
         "server": "esp3d-mock-server"
     },
     "dependencies": {
@@ -16,8 +18,13 @@
     "devDependencies": {
         "@babel/core": "^7.12.3",
         "@babel/preset-env": "^7.12.1",
+        "@storybook/addon-actions": "^6.1.9",
+        "@storybook/addon-essentials": "^6.1.9",
+        "@storybook/addon-links": "^6.1.9",
+        "@storybook/preact": "^6.1.9",
         "babel-loader": "^8.2.1",
         "babel-preset-preact": "^2.0.0",
+        "core-js": "^3.8.0",
         "css-loader": "^5.0.1",
         "eslint": "^7.14.0",
         "eslint-config-preact": "^1.1.3",
