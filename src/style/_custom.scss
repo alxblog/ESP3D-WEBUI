@@ -124,8 +124,23 @@
 }
 
 #featuresSettingsPanel {
+    h3 {
+        color: $primary-color;
+        text-transform: capitalize;
+        font-weight: 400;
+        margin-top: 1.5em;
+    }
+
     .panel {
         height: 100%;
+
+        .panel-title {
+            h4 {
+                text-transform: capitalize;
+                // font-size: 5em;
+            }
+
+        }
 
         .panel-body {
             padding: 0.4rem 0.8rem;
@@ -150,9 +165,14 @@
     scrollbar-width: thin;
 
     // font-weight: 300;
+    pre {
+        font-size: 2vw;
+    }
+
     code {
         margin: 0em;
         display: block;
+        font-size: 2vw;
 
         &.stdout {
             &:before {

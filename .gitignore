@@ -5,3 +5,5 @@ dist/index.html
 size-plugin.json
 stats.json
 test
+src/stories
+*.stories.js
