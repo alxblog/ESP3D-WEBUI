@@ -6,6 +6,7 @@
     "scripts": {
         "build": "esp3d-devtool -P -W ./config/webpack.config.js -E ./esp3d.config.js ",
         "dev": "esp3d-devtool -W ./config/webpack.config.js -E ./esp3d.config.js "
+        "server": "esp3d-mock-server"
     },
     "dependencies": {
         "preact": "^10.5.7",
@@ -20,6 +21,7 @@
         "css-loader": "^5.0.1",
         "eslint": "^7.14.0",
         "eslint-config-preact": "^1.1.3",
+        "esp3d-mock-server": "^0.0.1",
         "esp3d-webui-devtool": "alxblog/esp3d-webui-devtool",
         "html-webpack-plugin": "^4.5.0",
         "mini-css-extract-plugin": "^1.3.1",
