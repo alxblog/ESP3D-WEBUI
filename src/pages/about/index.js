@@ -1,19 +1,37 @@
 import { h } from 'preact';
 import { useEffect, useState } from "preact/hooks";
 import { Loading } from '../../components/Spectre'
+import { useQueuing } from '../../hooks/useQueuing'
+import useUI from '../../hooks/useUi'
 
 const About = () => {
+    const { createNewRequest } = useQueuing()
+    const { toasts } = useUI()
+
     const [isLoading, setIsLoading] = useState(true)
     const [props, setProps] = useState([])
 
     useEffect(() => {
-        setIsLoading(false)
-        setProps(props)
-
-    }, [props])
+        getProps()
+    }, [])
 
     const getProps = () => {
-        setIsLoading(false)
+        setIsLoading(true)
+        createNewRequest(
+            `http://localhost:8080/command?cmd=${encodeURIComponent('[ESP420]')}`,
+            { method: 'GET' },
+            {
+                onSuccess: result => {
+                    const { Status } = JSON.parse(result)
+                    setProps([...Status])
+                    setIsLoading(false)
+                },
+                onFail: error => {
+                    setIsLoading(false)
+                    toasts.addToast({ content: error, type: 'error' })
+                },
+            }
+        )
     }
 
     return (
@@ -23,8 +41,8 @@ const About = () => {
             {isLoading && <Loading />}
             {!isLoading && props &&
                 <ul>
-                    {props.map((prop, key) =>
-                        <li key={key}>{prop.prop} : {prop.value}</li>
+                    {props.map(({ id, value }) =>
+                        <li>{id} : {value}</li>
                     )}
                 </ul>}
             <button className="btn" onClick={() => { getProps() }}>Refresh</button>
