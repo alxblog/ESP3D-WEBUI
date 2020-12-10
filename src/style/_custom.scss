@@ -1,10 +1,22 @@
 #main-container {
     padding: 1em;
+
+    @media (max-width: $size-sm) {
+        padding: 0em;
+    }
 }
 
 .navbar {
     padding: 1em;
     background-color: $bg-color-dark;
+}
+
+.tab {
+    .tab-item {
+        .btn {
+            border-radius: 0;
+        }
+    }
 }
 
 .file-list {
@@ -19,7 +31,7 @@
 
         .tile-content {
             .tile-subtitle {
-                line-height: $line-height*0.8;
+                line-height: $line-height * 0.8;
             }
         }
     }
@@ -40,7 +52,6 @@
             overflow-y: auto;
             padding: 0 $layout-spacing-lg;
         }
-
     }
 }
 
@@ -108,7 +119,6 @@
             background: $secondary-color;
             color: $primary-color;
         }
-
     }
 }
 
@@ -139,7 +149,6 @@
                 text-transform: capitalize;
                 // font-size: 5em;
             }
-
         }
 
         .panel-body {
@@ -164,11 +173,11 @@
     scrollbar-color: rebeccapurple green;
     scrollbar-width: thin;
 
-    // font-weight: 300;
     pre {
-        font-size: 2vw;
+        margin: 0;
     }
 
+    // font-weight: 300;
     code {
         margin: 0em;
         display: block;
