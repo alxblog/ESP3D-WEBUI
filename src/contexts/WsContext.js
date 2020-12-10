@@ -1,11 +1,43 @@
 import { h, createContext } from 'preact'
-import { useState, useEffect, useRef } from "preact/hooks"
+import { useState, useEffect, useRef, useReducer } from "preact/hooks"
+import { useDebugLog } from 'preact-usedebuglog'
+import Parser from '../../src/lib/parser'
+
+/**
+ * @todo limit the WS buffer size (wsData and parsedValue)
+ */
 
 export const WsContext = createContext()
 WsContext.displayName = "wsContext"
 
+const INITIAL_STATE = {
+    temp: [],
+    files: []
+}
+
+const reducer = (state, action) => {
+    if (!action) return INITIAL_STATE
+    switch (action.type) {
+        case 'temp':
+            return {
+                ...state,
+                temp: [...state.temp, action.values]
+            }
+        case 'files':
+            return {
+                ...state,
+                files: [...action.values]
+            }
+        default:
+            return { ...INITIAL_STATE, ...state }
+    }
+}
+
 const WsContextProvider = ({ children }) => {
+    const c = useDebugLog('WsContextProvider')
+    const [parsedValues, dispatch] = useReducer(reducer, INITIAL_STATE)
     const dataBuffer = useRef([])
+    const parser = useRef(new Parser('marlin'))
     const [wsConnection, setWsConnection] = useState()
     const [wsData, setWsData] = useState([])
     const webSocketIp = 'localhost'
@@ -21,6 +53,7 @@ const WsContextProvider = ({ children }) => {
     }
 
     const onMessageCB = (e) => {
+        const { parse } = parser.current
         //for binary messages used for terminal
         const stdOutData = e.data
         if (stdOutData instanceof ArrayBuffer) {
@@ -30,17 +63,29 @@ const WsContextProvider = ({ children }) => {
                         acc + String.fromCharCode(curr), '')
                 )
             dataBuffer.current = [...dataBuffer.current, ...newLines]
+            c.log(newLines);
+            [...newLines].forEach(line => {
+                dispatch(parse(line))
+            })
+        } else { //others txt messages
+            dataBuffer.current = [...dataBuffer.current, stdOutData]
+            const parsedRes = parse(stdOutData)
+
+            if (parsedRes) {
+                c.log(parsedRes)
+                dispatch(parsedRes)
+            }
+
         }
-        else dataBuffer.current = [...dataBuffer.current, stdOutData] //others txt messages
         setWsData(dataBuffer.current)
     }
 
     const onCloseCB = (e) => {
-        console.log(e)
+        c.log(e)
     }
-    
+
     const onErorCB = (e) => {
-        console.log(e)
+        c.log(e)
         // toasts.addToast({ content: e, type: 'error' })
     }
 
@@ -57,16 +102,22 @@ const WsContextProvider = ({ children }) => {
         return () => { if (wsConnection) ws.close() }
     }, [])
 
-    const setData = (cmdLine) => {
+    const addData = (cmdLine) => {
         const newWsData = [...wsData, cmdLine]
         dataBuffer.current = newWsData
         setWsData(newWsData)
+    }
+    const setData = (cmdLine) => {
+        dataBuffer.current = cmdLine
+        setWsData(cmdLine)
     }
 
     const store = {
         ws: wsConnection,
         data: wsData,
-        setData
+        parsedValues,
+        setData,
+        addData,
     }
 
     return (
