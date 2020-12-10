@@ -9,15 +9,26 @@ import { useWS } from '../../../hooks/useWS'
 import useUi from '../../../hooks/useUi'
 
 const TerminalPanel = ({ title }) => {
-    const { data, setData } = useWS()
+    const { data, addData, setData } = useWS()
     const commandInputRef = useRef()
+    const [terminalLn, setTerminalLn] = useState()
     const { createNewRequest, abortRequest } = useQueuing()
     const { toasts } = useUi()
+
+    const clearTerminal = () => {
+        setTerminalLn([])
+        setData([])
+    }
+
+    useEffect(() => {
+        setTerminalLn([...data])
+    }, [data])
 
     const sendCommand = () => {
         if (commandInputRef.current) {
             const input = commandInputRef.current.value
-            setData(input)
+            addData(input)
+            setTerminalLn([...data])
             commandInputRef.current.value = ''
             createNewRequest(
                 `http://localhost:8080/command?cmd=${encodeURIComponent(input)}&PAGEID=14`,
@@ -43,15 +54,15 @@ const TerminalPanel = ({ title }) => {
                     <PanelDropdownMenu>
                         <Menu.Item><Field type="boolean" id="" label="Verbose" /></Menu.Item>
                         <Menu.Item><Field type="boolean" id="" label="Autoscrool" /></Menu.Item>
-                        <Menu.Item><a href="#">Clear</a></Menu.Item>
+                        <Menu.Item><a href="#" onClick={(e) => { clearTerminal(); e.preventDefault(); }}>Clear</a></Menu.Item>
                     </PanelDropdownMenu>
                 </Panel.Title>
             </Panel.Header>
             <Panel.Body>
                 <div id="terminal" >
-                    {data && data.map(line => <pre>{line}</pre>)}
+                    {terminalLn && terminalLn.map(line => <pre>{line}</pre>)}
                 </div>
-                <form >
+                <form onSubmit={e => { e.preventDefault(); }}>
                     <div class="input-group">
                         <input type="text" class="form-input" ref={commandInputRef} />
                         <Button class="input-group-btn" primary type="submit" onclick={sendCommand}><Send /></Button>
