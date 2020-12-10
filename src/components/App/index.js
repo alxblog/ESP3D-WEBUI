@@ -1,8 +1,11 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
+import DebugLogProvider from 'preact-usedebuglog'
 import { Router, RouterProvider } from '../Router'
+import WsContextProvider from '../../contexts/WsContext'
 import UiContextProvider from '../../contexts/UiContext'
 import QueueingContextProvider from '../../contexts/QueueingContext'
+import SettingsContextProvider from '../../contexts/SettingsContext'
 import { TranslateContextProvider, useTranslateContext } from '../../components/Translate'
 import Navbar from '../Navbar';
 import { ToastsContainer } from '../Toast';
@@ -38,20 +41,26 @@ const routes = {
 const App = () => {
     return (
         <div id="app">
-            <RouterProvider>
-                <QueueingContextProvider>
-                    <TranslateContextProvider>
-                        <UiContextProvider>
-                            <ToastsContainer />
-                            <Modal />
-                            <Navbar />
-                            <div id="main-container">
-                                <Router routes={routes} />
-                            </div>
-                        </UiContextProvider>
-                    </TranslateContextProvider>
-                </QueueingContextProvider>
-            </RouterProvider>
+        <DebugLogProvider dev>
+            <WsContextProvider>
+                <RouterProvider>
+                    <QueueingContextProvider>
+                        <TranslateContextProvider>
+                            <UiContextProvider>
+                                <SettingsContextProvider>
+                                    <ToastsContainer />
+                                    <Modal />
+                                    <Navbar />
+                                    <div id="main-container">
+                                        <Router routes={routes} />
+                                    </div>
+                                </SettingsContextProvider>
+                            </UiContextProvider>
+                        </TranslateContextProvider>
+                    </QueueingContextProvider>
+                </RouterProvider>
+            </WsContextProvider>
+        </DebugLogProvider>
         </div>
     )
 }
