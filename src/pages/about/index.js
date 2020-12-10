@@ -3,6 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import { Loading } from '../../components/Spectre'
 import { useQueuing } from '../../hooks/useQueuing'
 import useUI from '../../hooks/useUi'
+import Panel from '../../components/Spectre/Panel'
 
 const About = () => {
     const { createNewRequest } = useQueuing()
@@ -37,15 +38,20 @@ const About = () => {
     return (
         <div id="about" className="container">
             <h2>About</h2>
-            <p>This is the About .</p>
             {isLoading && <Loading />}
-            {!isLoading && props &&
-                <ul>
-                    {props.map(({ id, value }) =>
-                        <li>{id} : {value}</li>
-                    )}
-                </ul>}
-            <button className="btn" onClick={() => { getProps() }}>Refresh</button>
+            <Panel>
+                <Panel.Body>
+                    {!isLoading && props &&
+                        <ul>
+                            {props.map(({ id, value }) =>
+                                <li><span class="label label-secondary">{id} </span> : <span class="text-dark">{value}</span></li>
+                            )}
+                        </ul>}
+                    <button className="btn" onClick={() => { getProps() }}>Refresh</button>
+                </Panel.Body>
+                <Panel.Footer>
+                </Panel.Footer>
+            </Panel>
         </div>
     )
 };
