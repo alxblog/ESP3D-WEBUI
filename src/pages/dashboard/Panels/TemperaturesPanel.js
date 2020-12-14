@@ -47,17 +47,15 @@ const TempRow = ({ id, target, value, unit = 'C' }) => {
 }
 
 const Chart = () => {
-    const smoothie = useRef()
-    const lineRef = useRef()
-    const { parsedValues } = useWS()
     const smoothieOpt = {
-        millisPerPixel: 100,
+        responsive: true,
+        millisPerPixel: 50,
         labels: { fillStyle: '#dadee4' },
         grid: {
             fillStyle: '#ffffff',
             strokeStyle: '#eef0f3',
             sharpLines: true,
-            millisPerLine: 10000,
+            millisPerLine: 5000,
             verticalSections: 3,
             borderVisible: false,
             limitFPS: 15,
@@ -66,56 +64,47 @@ const Chart = () => {
         },
         limitFPS: 15
     }
-    const chart = new SmoothieChart(smoothieOpt);
-    const [lines, setLines] = useState()
-    const line1 = new TimeSeries()
-    // const line2 = new TimeSeries()
+    const { parsedValues } = useWS()
+    const smoothie = useRef()
+    const lineRef = useRef()
+    const chartRef = useRef(new SmoothieChart(smoothieOpt))
 
+    // for dev purpose
     function getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-
     useEffect(() => {
         const canvas = smoothie.current
         // Create the chart
-        lineRef.current = new TimeSeries()
-        chart.streamTo(canvas, 0);
-        chart.addTimeSeries(line1, { strokeStyle: '#a55eea' });
-        chart.addTimeSeries(lineRef.current, { strokeStyle: '#fc5c65' });
-
-        // const interval = setInterval(function () {
-        //     line1.append(Date.now(), getRandomIntInclusive(100, 200));
-        //     line2.append(Date.now(), getRandomIntInclusive(100, 200));
-        // }, 2000);
-        // return () => clearInterval(interval);
-    }, []);
-
-    // useEffect(() => {
-    //     const interval = setInterval(function () {
-    //         // line1.append(Date.now(), getRandomIntInclusive(100, 200));
-    //         // line2.append(Date.now(), getRandomIntInclusive(100, 200));
-    //     }, 2000);
-    //     return () => clearInterval(interval);
-    // }, [])
+        lineRef.current = []
+        chartRef.current.streamTo(canvas, 2000) //delay (in ms) should be eaqual to polling interval
+    }, [])
 
     useEffect(() => {
-        console.log('changement', parsedValues)
         if (parsedValues.temp.length > 0) {
             const { temp } = parsedValues
             const lastKey = parsedValues.temp.length - 1
-            console.log(parseFloat(temp[lastKey][0].value) * 100)
-            lineRef.current.append(Date.now(), parseFloat(temp[lastKey][0].value) * 100);
+            temp[lastKey].forEach(sensor => {
+                if (lineRef.current[sensor.id]) {
+                    const val = sensor.value
+                    lineRef.current[sensor.id].append(Date.now(), parseFloat(val * 100))
+                }
+                else {
+                    lineRef.current[sensor.id] = new TimeSeries()
+                    chartRef.current.addTimeSeries(lineRef.current[sensor.id], { strokeStyle: '#fc5c65' }) // to-do handle different colors
+                }
 
+            })
         }
     }, [parsedValues])
 
 
 
     return <div>
-        <canvas id="chart" width="450" height="100" ref={smoothie} />
+        <canvas id="chart" style={{ width: "100%" }} height="100" ref={smoothie} />
     </div>
 }
 
