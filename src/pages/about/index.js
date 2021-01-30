@@ -19,7 +19,7 @@ const About = () => {
     const getProps = () => {
         setIsLoading(true)
         createNewRequest(
-            `http://localhost:8080/command?cmd=${encodeURIComponent('[ESP420]')}`,
+            `http://localhost:8880/command?cmd=${encodeURIComponent('[ESP420]')}`,
             { method: 'GET' },
             {
                 onSuccess: result => {
