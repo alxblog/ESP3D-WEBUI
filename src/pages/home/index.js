@@ -1,5 +1,7 @@
 import { h } from 'preact';
+import { useEffect } from 'preact/hooks';
 import { useQueuing } from '../../hooks/useQueuing'
+import { useSettings } from '../../hooks/useSettings'
 
 const Home = () => {
 	const {
@@ -7,6 +9,8 @@ const Home = () => {
 		abortRequest,
 		data
 	} = useQueuing()
+
+	const [settings, setSettings] = useSettings()
 
 	const addNewRequest = () => {
 		createNewRequest(
@@ -19,6 +23,10 @@ const Home = () => {
 		)
 	}
 
+	useEffect(() => {
+		// setSettings({ foo: 'barrr' })
+	})
+
 	return (
 		<div className="container">
 			<h2>Home</h2>
@@ -28,6 +36,12 @@ const Home = () => {
 			<pre>
 				<code>{data}</code>
 			</pre>
+			<hr />
+			<p>
+				<pre>
+					{JSON.stringify(settings, null, 2)}
+				</pre>
+			</p>
 		</div>
 	)
 }
