@@ -23,7 +23,7 @@ const useStorageSystem = () => {
     }
 
     const {
-        getListSD,
+        getPrinterListSD,
         getEspFsList
     } = useESP3D()
 
@@ -63,15 +63,13 @@ const useStorageSystem = () => {
             actions: {
                 list: () => {
                     setIsLoading(true);
-                    getListSD()
+                    getPrinterListSD()
                     setCapacity()
                 },
                 upload: () => { },
                 download: () => { },
-                print: () => { },
+                print: (filepath) => { runJobFromPath(filepath) },
                 remove: () => { },
-                mkdir: () => { },
-                rmdir: () => { }
             }
         },
         {
