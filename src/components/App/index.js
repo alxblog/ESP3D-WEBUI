@@ -41,26 +41,26 @@ const routes = {
 const App = () => {
     return (
         <div id="app">
-        <DebugLogProvider dev>
-            <WsContextProvider>
-                <RouterProvider>
-                    <QueueingContextProvider>
-                        <TranslateContextProvider>
-                            <UiContextProvider>
-                                <SettingsContextProvider>
-                                    <ToastsContainer />
-                                    <Modal />
-                                    <Navbar />
-                                    <div id="main-container">
-                                        <Router routes={routes} />
-                                    </div>
-                                </SettingsContextProvider>
-                            </UiContextProvider>
-                        </TranslateContextProvider>
-                    </QueueingContextProvider>
-                </RouterProvider>
-            </WsContextProvider>
-        </DebugLogProvider>
+            <DebugLogProvider dev>
+                <WsContextProvider>
+                    <RouterProvider>
+                        <QueueingContextProvider>
+                            <TranslateContextProvider>
+                                <UiContextProvider>
+                                    <SettingsContextProvider>
+                                        <ToastsContainer />
+                                        <Modal />
+                                        <Navbar />
+                                        <div id="main-container">
+                                            <Router routes={routes} />
+                                        </div>
+                                    </SettingsContextProvider>
+                                </UiContextProvider>
+                            </TranslateContextProvider>
+                        </QueueingContextProvider>
+                    </RouterProvider>
+                </WsContextProvider>
+            </DebugLogProvider>
         </div>
     )
 }
