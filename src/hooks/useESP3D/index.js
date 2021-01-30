@@ -52,7 +52,7 @@ const useESP3D = () => {
     const getEspFsList = () => {
         return new Promise((resolve, reject) => {
             createNewRequest(
-                `http://localhost:8080/files?path=/`,
+                `http://localhost:8880/files?path=/`,
                 { method: 'GET' },
                 {
                     onSuccess: result => { resolve(result) },
