@@ -5,12 +5,12 @@ import useUI from '../../hooks/useUi'
 const useESP3D = () => {
     const { toasts } = useUI()
     const { createNewRequest } = useQueuing()
-    const baseURL2 = 'http://localhost:8080'
+    const baseURL2 = 'http://localhost:8880'
 
     const sendSerialCmd = (cmd) => {
         return new Promise((resolve, reject) => {
             createNewRequest(
-                `http://localhost:8080/command?cmd=${encodeURIComponent(cmd)}`,
+                `http://localhost:8880/command?cmd=${encodeURIComponent(cmd)}`,
                 { method: 'GET' },
                 {
                     onSuccess: result => { resolve(result) },
