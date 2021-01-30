@@ -41,7 +41,7 @@ const WsContextProvider = ({ children }) => {
     const [wsConnection, setWsConnection] = useState()
     const [wsData, setWsData] = useState([])
     const webSocketIp = 'localhost'
-    const webSocketPort = 81
+    const webSocketPort = 8881
 
     const splitArrayBufferByLine = (arrayBuffer) => {
         const bytes = new Uint8Array(arrayBuffer)
