@@ -97,7 +97,7 @@ const UploadForm = ({ currentPath }) => {
             const formData = new FormData()
             formData.append('myfile', selectedFiles[i].file);
             createNewRequest(
-                `http://localhost:8080/files?path=${encodeURIComponent(currentPath)}&action=list&PAGEID=3`,
+                `http://localhost:8880/files?path=${encodeURIComponent(currentPath)}&action=list&PAGEID=3`,
                 {
                     method: 'POST',
                     body: formData
