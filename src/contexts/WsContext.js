@@ -2,10 +2,7 @@ import { h, createContext } from 'preact'
 import { useState, useEffect, useRef, useReducer } from "preact/hooks"
 import { useDebugLog } from 'preact-usedebuglog'
 import Parser from '../../src/lib/parser'
-
-/**
- * @todo limit the WS buffer size (wsData and parsedValue)
- */
+import { limitArr } from '../utils'
 
 export const WsContext = createContext()
 WsContext.displayName = "wsContext"
@@ -21,7 +18,7 @@ const reducer = (state, action) => {
         case 'temp':
             return {
                 ...state,
-                temp: [...state.temp, action.values]
+                temp: limitArr([...state.temp, action.values], 400)
             }
         case 'files':
             return {
