@@ -21,7 +21,7 @@ export const useSettings = () => {
 
     const getInterfaceSettings = () => {
         createNewRequest(
-            `http://localhost:8080/preferences.json`,
+            `http://localhost:8880/preferences.json`,
             { method: 'GET' },
             {
                 onSuccess: result => {
@@ -38,7 +38,7 @@ export const useSettings = () => {
     }
     const getFeaturesSettings = () => {
         createNewRequest(
-            `http://localhost:8080/command?cmd=${encodeURIComponent('[ESP400]')}`,
+            `http://localhost:8880/command?cmd=${encodeURIComponent('[ESP400]')}`,
             { method: 'GET' },
             {
                 onSuccess: result => {
