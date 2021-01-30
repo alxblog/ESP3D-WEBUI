@@ -55,24 +55,24 @@ const WsContextProvider = ({ children }) => {
         const stdOutData = e.data
         if (stdOutData instanceof ArrayBuffer) {
             const newLines = splitArrayBufferByLine(stdOutData)
-                .map(line =>
-                    line.reduce((acc, curr) =>
+                .map(line => ({
+                    std: "out", value: line.reduce((acc, curr) =>
                         acc + String.fromCharCode(curr), '')
+                })
+
                 )
             dataBuffer.current = [...dataBuffer.current, ...newLines]
             c.log(newLines);
             [...newLines].forEach(line => {
-                dispatch(parse(line))
+                dispatch(parse(line.value))
             })
         } else { //others txt messages
-            dataBuffer.current = [...dataBuffer.current, stdOutData]
+            dataBuffer.current = [...dataBuffer.current, { std: "out", value: stdOutData }]
             const parsedRes = parse(stdOutData)
-
             if (parsedRes) {
                 c.log(parsedRes)
                 dispatch(parsedRes)
             }
-
         }
         setWsData(dataBuffer.current)
     }
