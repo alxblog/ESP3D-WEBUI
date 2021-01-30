@@ -1,3 +1,4 @@
+import { hslToHex } from '../../utils'
 class Parser {
     constructor(firmware) {
         this.firmware = firmware
@@ -31,14 +32,14 @@ class Parser {
 
     fileParser(line) {
         // const { filename, size } = line.split(' ')
-        const FullMatch = [...line.matchAll(/([\w-~\d]+.[\d\w]+)\s(\d+)/gmi)]
-        const [fullmatch, filename, size] = FullMatch[0]
-        this.fileListBuffer = (fullmatch) ? [...this.fileListBuffer, { filename, size: parseInt(size) }] : [...this.fileListBuffer]
+        const FullMatch = [...line.matchAll(/([\w-\/~\d]+.[\d\w]+)\s(\d+)/gmi)]
+        const [fullmatch, name, size] = FullMatch[0]
+        this.fileListBuffer = (fullmatch) ? [...this.fileListBuffer, { name, size: parseInt(size) }] : [...this.fileListBuffer]
         return null
     }
 
     returnFileList() {
-        console.log('files', this.fileListBuffer)
+        // console.log('files', this.fileListBuffer)
         return {
             values: [...this.fileListBuffer],
             type: 'files'
@@ -55,11 +56,16 @@ class Parser {
         const tempRegExp = /([a-zA-Z]{1}-?\d*){1}:(-?\d+\.?\d*){1} *\/? *(\d*\.*\d*)?/gmi;
         const values = [...line.matchAll(tempRegExp)]
             .map(
-                temp => ({
-                    id: temp[1],
-                    value: parseFloat(temp[2]),
-                    target: parseFloat(temp[3])
-                })
+                (temp, i, arr) => {
+                    const hue = Math.floor(360 / arr.length * i) //generate hue depending on the number of sensors
+                    return {
+                        timestamp: Date.now(),
+                        id: temp[1],
+                        value: parseFloat(temp[2]),
+                        target: parseFloat(temp[3]),
+                        color: hslToHex(hue, 80, 70)
+                    }
+                }
             )
         return {
             values,
