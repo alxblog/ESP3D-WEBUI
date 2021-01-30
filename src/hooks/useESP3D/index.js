@@ -39,12 +39,23 @@ const useESP3D = () => {
     const setSpeed = () => { }
     const setFlowrate = () => { }
     const setFan = () => { }
-    const getListSD = async (extra) => {
+
+    const getPrinterListSD = async (extra) => {
         try {
             // const res = await sendSerialCmd()
             await sendSerialCmd(`M20 ${extra}`)
         } catch (e) {
-            toasts.addToast({ content: "boobooo", type: 'error' })
+            toasts.addToast({ content: JSON.stringify(e), type: 'error' })
+            console.log(e)
+        }
+    }
+
+    const runJobFromPath = async (filepath) => {
+        try {
+            await sendSerialCmd(`M23 ${filepath}`)
+            await sendSerialCmd(`M24`)
+        } catch (e) {
+            toasts.addToast({ content: JSON.stringify(e), type: 'error' })
             console.log(e)
         }
     }
@@ -71,8 +82,9 @@ const useESP3D = () => {
         setSpeed,
         setFlowrate,
         setFan,
-        getListSD,
-        getEspFsList
+        getPrinterListSD,
+        getEspFsList,
+        runJobFromPath
     }
 }
 
