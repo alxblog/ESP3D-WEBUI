@@ -18,13 +18,35 @@ const FeaturesTab = () => {
     const { createNewRequest } = useQueuing()
     const [formState, setFormState] = useState()
     const [sectionsStructure, setSectionsStructure] = useState()
-    const [updatableSettingsState, setUpdatableSettingsState] = useState({})
+    const [updatableSettingsState, setUpdatableSettingsState] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     // const sectionsStructure = settingsFormatter(Settings)
 
     const handleValidation = (id, value) => { }
 
-    const handleSubmit = (values) => { }
+    const saveFeaturesSettings = (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+
+        updatableSettingsState.forEach(({ p, v }) => {
+            createNewRequest(
+                `http://localhost:8880/command?cmd=${encodeURIComponent(`[ESP401] P=${p} V=${v}`)}`,
+                { method: 'GET' },
+                {
+                    onSuccess: result => {
+                        getFeaturesSettings()
+                        setUpdatableSettingsState([])
+                        setIsLoading(false)
+                    },
+                    onFail: error => {
+                        setIsLoading(false)
+                        toasts.addToast({ content: error, type: 'error' })
+                    },
+                })
+
+        })
+
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -32,16 +54,14 @@ const FeaturesTab = () => {
         const validation = { valid: isValid, message: 'test message' }
         const newValue = { [name]: { ...formState[name], value: value, validation } }
         setFormState({ ...formState, ...newValue })
-        if (isValid.valid) setUpdatableSettingsState({ ...updatableSettingsState, [name]: value })
+        // if (isValid.valid) {
+        setUpdatableSettingsState([...updatableSettingsState, { p: name, v: value }])
+        // }
     }
 
-    const saveFeaturesSettings = (updatedSettings) => {
-        //[ESP401]P=329 T=B V=0&PAGEID=5
-    }
-
-    useEffect(() => {
+    const getFeaturesSettings = () => {
         createNewRequest(
-            `http://localhost:8080/command?cmd=${encodeURIComponent('[ESP400]')}`,
+            `http://localhost:8880/command?cmd=${encodeURIComponent('[ESP400]')}`,
             { method: 'GET' },
             {
                 onSuccess: result => {
@@ -56,7 +76,10 @@ const FeaturesTab = () => {
                 },
             }
         )
+    }
 
+    useEffect(() => {
+        getFeaturesSettings()
         // console.log('updatableSettingsState', updatableSettingsState) //for dev purpose, handeValidation todo
     }, [])
 
@@ -103,6 +126,10 @@ const FeaturesTab = () => {
                         )
                     })
                 }
+                <pre>
+                    {updatableSettingsState && JSON.stringify(updatableSettingsState, null, 4)}
+                </pre>
+                <div><button class="btn btn-primary" onClick={(e) => saveFeaturesSettings(e)}>Save</button></div>
             </form>}
         </div>
     )

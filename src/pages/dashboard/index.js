@@ -5,7 +5,11 @@ import { Router, Breadcrumbs } from '../../components/Router';
 import { Filter } from './Filter'
 import { capitalize } from '../../utils'
 
+
+
 import panelList from './PanelList-APP_TARGET'
+
+
 
 const Dashboard = () => {
 	const [activePanels, setActivePanels] = useState({ ...panelList })
@@ -41,10 +45,12 @@ const Dashboard = () => {
 			</div>}
 			{!isLoading && <div className="columns">
 				{activePanels && Object.keys(activePanels).map(panelKey => {
-					const { comp } = activePanels[panelKey]
+					const { comp, col } = activePanels[panelKey]
 					const DashboardPanel = comp
 					return (
-						<div key={panelKey} className="column col-sm-12 cold-md-6 col-lg-6 col-xl-6 col-4 mb-2">
+						<div
+							key={panelKey}
+							className={`column col-sm-12 cold-md-${col * 6 || 6} col-lg-${col * 6 || 6} col-xl-${col * 6 || 6} col-${col * 4 || 4}`}>
 							<DashboardPanel title={capitalize(panelKey)} />
 						</div>)
 				})}

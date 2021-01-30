@@ -16,6 +16,16 @@ const panelList = {
     positions: {
         comp: PositionsPanel,
     },
+    extrusion: {
+        comp: ExtrusionPanel,
+    },
+    terminal: {
+        comp: TerminalPanel,
+        // col: 2
+    },
+    files: {
+        comp: FilesPanel,
+    },
     speed: {
         comp: SpeedPanel,
     },
@@ -24,15 +34,6 @@ const panelList = {
     },
     fan: {
         comp: FanPanel,
-    },
-    extrusion: {
-        comp: ExtrusionPanel,
-    },
-    terminal: {
-        comp: TerminalPanel,
-    },
-    files: {
-        comp: FilesPanel,
     },
     macro: {
         comp: MacroPanel,
