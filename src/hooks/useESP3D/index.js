@@ -40,7 +40,7 @@ const useESP3D = () => {
     const setFlowrate = () => { }
     const setFan = () => { }
 
-    const getPrinterListSD = async (extra) => {
+    const getPrinterListSD = async (extra = '') => {
         try {
             // const res = await sendSerialCmd()
             await sendSerialCmd(`M20 ${extra}`)
