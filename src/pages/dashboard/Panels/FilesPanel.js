@@ -11,10 +11,7 @@ import { UploadForm } from '../../../components/UploadForm'
 import { Field } from '../../../components/Form/Field'
 import { parseFileSizeString } from '../../../utils'
 
-
 const FilesPanel = ({ title }) => {
-    // const [isLoading, setIsLoading] = useState(true)
-    // const { currentStorageSys, setCurrentStorageSys, storageOptList} = useStorageSystem()// bouger la logique dans useStorageSystem
     const {
         currentStorageSys,
         updateCurrentStorageSys,
@@ -28,20 +25,6 @@ const FilesPanel = ({ title }) => {
     useEffect(() => {
         if (currentStorageSys) currentStorageSys.actions.list()
     }, [currentStorageSys])
-
-    // useEffect(() => {
-    //     // storageSys.actions.list()
-    //     setIsLoading(true)
-    //     setFiles(storageSys.files)
-    //     setIsLoading(false)
-    // }, [storageSys, list.files, files])
-
-    // useEffect(() => {
-    //     // storageSys.actions.list()
-    //     console.log(storageSys)
-    //     storageSys.actions.list();
-    //     setFiles(storageSys.files)
-    // }, [storageSys])
 
     return currentStorageSys && (
         <Panel>
@@ -74,7 +57,6 @@ const FilesPanel = ({ title }) => {
             <Panel.Nav>
             </Panel.Nav>
             <Panel.Body>
-                {/* <pre>{JSON.stringify(fileList, null, 4)}</pre> */}
                 {isLoading && <Loading lg />}
                 {fileList === null && <div class="empty">
                     <p class="empty-title h5">No Storage</p>
