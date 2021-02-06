@@ -43,6 +43,7 @@ const useESP3D = () => {
     const getPrinterListSD = async (extra = '') => {
         try {
             // const res = await sendSerialCmd()
+            await sendSerialCmd(`M21`)
             await sendSerialCmd(`M20 ${extra}`)
         } catch (e) {
             toasts.addToast({ content: JSON.stringify(e), type: 'error' })

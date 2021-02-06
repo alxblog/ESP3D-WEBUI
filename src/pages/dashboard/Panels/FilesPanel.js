@@ -24,6 +24,7 @@ const FilesPanel = ({ title }) => {
         isLoading
     } = useStorageSystem()
 
+
     useEffect(() => {
         if (currentStorageSys) currentStorageSys.actions.list()
     }, [currentStorageSys])
@@ -75,7 +76,14 @@ const FilesPanel = ({ title }) => {
             <Panel.Body>
                 {/* <pre>{JSON.stringify(fileList, null, 4)}</pre> */}
                 {isLoading && <Loading lg />}
-                {!isLoading && <List entries={fileList} />}
+                {fileList === null && <div class="empty">
+                    <p class="empty-title h5">No Storage</p>
+                    <p class="empty-subtitle">No Storage detected.</p>
+                </div>}
+                {!isLoading && fileList !== null && <List entries={fileList} />}
+                <pre>
+                    {}
+                </pre>
             </Panel.Body>
             <Panel.Footer>
                 <Field

@@ -23,7 +23,7 @@ const reducer = (state, action) => {
         case 'files':
             return {
                 ...state,
-                files: [...action.values]
+                files: action.values
             }
         default:
             return { ...INITIAL_STATE, ...state }
