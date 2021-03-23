@@ -5,6 +5,10 @@ import PanelDropdownMenu from '../../../components/PanelDropdownMenu'
 
 import { Settings } from 'preact-feather';
 
+/**
+ * 
+ * @todo disable buttons if length is not set 
+ */
 const ExtrusionPanel = (
     {
         children,
